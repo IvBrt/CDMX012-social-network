@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-cycle
 import {
   botonGoogleFirebase,
 } from '../lib/FuncionesFirebase.js';
@@ -35,7 +36,7 @@ export const inicio = () => {
   botonRegistro.textContent = 'Registro';
   botonRegistro.addEventListener('click', () => {
     navegador('/registro'); // PREGUNTAR!!!
-    console.log("aceptamiscambisGitHub")
+    console.log('aceptamiscambisGitHub');
   });
 
   nodoH3.textContent = '-o-';

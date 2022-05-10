@@ -3,12 +3,15 @@
 // eslint-disable-next-line import/no-cycle
 // import { navegador } from '../Router.js';
 // eslint-disable-next-line import/no-cycle
+
 import { cerrarSesion } from '../lib/FuncionesFirebase.js';
+
 import {
   guardarPublicaciones,
   obtencionDePublicaciones,
   onBtenerPublicaciones,
   eliminarPublicaciones,
+  editarPublicaciones,
 } from '../lib/InstalacionFirebase.js';
 // eslint-disable-next-line import/no-cycle
 import { navegador } from '../Router.js';
@@ -105,6 +108,8 @@ export const Muro = () => {
     // si divquealamcena las publicaciones ya tiene  contenido borrar el contenido
     // de lo contrario , proceder con el códgio que ya existe que se encuentra aqui abajo
     let botonesDeBasura = '';
+    let botonesDeEditar = '';
+
     querySnapshot.forEach((doc) => {
       const publicacion = doc.data();
       // console.log(doc.id);
@@ -119,19 +124,45 @@ export const Muro = () => {
       botonBasuraPublicaciones.setAttribute('data-id', doc.id);
       botonBasuraPublicaciones.setAttribute('src', '../images/sombrero-basura.png');
 
-      botonesDeBasura = document.querySelectorAll('.botonBorrar');
-        
-      tituloPublicacion.append(botonBasuraPublicaciones);
+      botonesDeBasura = document.querySelectorAll('.botonBorrar'); // Se une con la linea 133, 134, y el bloque de la 137 a la 142
+
+      // Input editar
+      const botonEditarPublicaciones = document.createElement('img');
+      botonEditarPublicaciones.setAttribute('id', 'botonEditarPublicacionesID');
+      botonEditarPublicaciones.setAttribute('class', 'botonEditar');
+      botonEditarPublicaciones.setAttribute('data-id', doc.id);
+      botonEditarPublicaciones.setAttribute('src', '../images/lapicito-editar.png');
+      // inputEditarPublicaciones.addEventListener('click', () => {
+      //   inputEditarPublicaciones();
+      // });
+
+      botonesDeEditar = document.querySelectorAll('.botonEditar');
+
+      tituloPublicacion.append(botonBasuraPublicaciones, botonEditarPublicaciones);
       textoDeLaPublicacion.append(tituloPublicacion);
     });
+
     botonesDeBasura.forEach((btn) => {
       btn.addEventListener('click', ({ target: { dataset } }) => {
         eliminarPublicaciones(dataset.id);
         // console.log(dataset.id);
-        resetearDivPrincipal();
+        resetearDivPrincipal(); //Con este evitamos que aparezcan las copias
       });
     });
+
+    botonesDeEditar.forEach((btnEdit) => {
+      btnEdit.addEventListener('click', async (e) => {
+        const documento = await editarPublicaciones(e.target.dataset.id);
+      
+        const texto = documento.data();
+        container['inputCajaDeCreacionDePublicaciones'].value = texto.textoDeLaPublicacion;
+        console.log ('andy mimiendo, ivonne mimiendo más');
+
+
+        // resetearDivPrincipal();
+      });
     });
+  });
 
   // Boton de editar
 
@@ -141,23 +172,23 @@ export const Muro = () => {
 
   // Hasta aqui termina el main
 
-// ++++++++++++++++++++++++++++++ Nodos que se imprimen en el DOM
+  // ++++++++++++++++++++++++++++++ Nodos que se imprimen en el DOM
   seccionMuro.append(
     // logoVistaMuroDiv,
     logoVistaMuroImagen,
     botonCerrarSesion,
   );
 
-// ++++++++++++++++++++++++++++++Esto es el main
+  // ++++++++++++++++++++++++++++++Esto es el main
   areaParaEscribirPublicaciones.append(
     bloqueParaEscribirLaPublicacion,
     areaTextoEdicionChidoMasBorrado,
   );
-// ++++++++++++++++++++++++++++++Junta los 4 elementos a publicar
+  // ++++++++++++++++++++++++++++++Junta los 4 elementos a publicar
   areaTextoEdicionChidoMasBorrado.append(
     textoDeLaPublicacion,
   );
-// ++++++++++++++++++++++++++++++Esto es para enviar el mensaje
+  // ++++++++++++++++++++++++++++++Esto es para enviar el mensaje
   bloqueParaEscribirLaPublicacion.append(
     inputCajaDeCreacionDePublicaciones,
     botonDePublicaciones,
