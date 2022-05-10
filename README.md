@@ -511,8 +511,3 @@ Otras:
 * [Mobile First: el enfoque actual del diseño web móvil - 1and1](https://www.1and1.es/digitalguide/paginas-web/diseno-web/mobile-first-la-nueva-tendencia-del-diseno-web/)
 * [Mobile First - desarrolloweb.com](https://desarrolloweb.com/articulos/mobile-first-responsive.html)
 * [Mobile First Is NOT Mobile Only - Nielsen Norman Group](https://www.nngroup.com/articles/mobile-first-not-mobile-only/)
-<<<<<<< HEAD
-=======
-
-Gracias Gene por la ayuda ♥
->>>>>>> 274fe02b2749d9f3c50438afe80a42a7b089bdd2
